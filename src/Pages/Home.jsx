@@ -1,8 +1,16 @@
 import React from 'react';
-import Nav from '../Components/Nav';
+import Banner from '../Components/Banner';
+import Saving from '../Components/Saving';
+import FeaturedProducts from '../Components/FeaturedProducts';
 
 const Home = () => {
-  return <Nav />;
+  return (
+    <>
+      <Banner />
+      <Saving />
+      <FeaturedProducts title={'Featured Products'} />
+    </>
+  );
 };
 
 export default Home;
