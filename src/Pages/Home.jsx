@@ -1,7 +1,7 @@
 import React from 'react';
-import Banner from '../Components/Banner';
-import Saving from '../Components/Saving';
-import FeaturedProducts from '../Components/FeaturedProducts';
+import Banner from '../Components/home-components/Banner';
+import Saving from '../Components/home-components/Saving';
+import FeaturedProducts from '../Components/home-components/FeaturedProducts';
 
 const Home = () => {
   return (

@@ -15,7 +15,7 @@ const Nav = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 100) {
+      if (window.scrollY > 150) {
         setSticky(true);
       } else {
         setSticky(false);
@@ -68,7 +68,7 @@ const Nav = () => {
               </Link>
               <ul className="dropdown-menu">
                 <li>
-                  <Link className="dropdown-item" to="/">
+                  <Link className="dropdown-item" to="/category/:catslug">
                     Electronics
                   </Link>
                 </li>

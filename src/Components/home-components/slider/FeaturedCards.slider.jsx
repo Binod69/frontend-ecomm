@@ -1,11 +1,7 @@
 import React from 'react';
 import Slider from 'react-slick';
 
-import './style/feature.scss';
-
-import featuredProducts from './data/featuredProducts';
-
-const FeaturedProducts = ({ title }) => {
+const FeaturedCardsSlider = ({ config = {}, data = [] }) => {
   const settings = {
     dots: true,
     infinite: true,
@@ -40,17 +36,17 @@ const FeaturedProducts = ({ title }) => {
         },
       },
     ],
+    ...config,
   };
   return (
-    <div className="container py-5">
-      <h3 className="py-3">{title}</h3>
-      <div className="row">
-        <Slider {...settings}>
-          {featuredProducts.map((item) => (
-            <div key={item.id} className="col">
+    <>
+      <Slider {...settings}>
+        {data &&
+          data.map((item, index) => (
+            <div key={index} className="col">
               <div className="cardss">
                 <div>
-                  <img className="card-img" src={item.image} alt="" />
+                  <img className="card-img" src={item.image} alt={item.title} />
                 </div>
                 <div className="card-info">
                   <p className="text-title">{item.title} </p>
@@ -67,30 +63,11 @@ const FeaturedProducts = ({ title }) => {
                   </div>
                 </div>
               </div>
-              {/* <div className="card" style={{ width: '18rem' }}>
-                <img
-                  src={item.image}
-                  className="card-img-top img img-fluid"
-                  alt={item.title}
-                />
-                <div className="card-body">
-                  <h5 className="card-title">{item.title}</h5>
-                  <p className="card-text card-desc">{item.description}</p>
-                </div>
-
-                <ul className="list-group list-group-flush">
-                  <li className="list-group-item">Price: {item.price}</li>
-                  <li className="list-group-item">
-                    Rating: {item.rating.rate}
-                  </li>
-                </ul>
-              </div> */}
             </div>
           ))}
-        </Slider>
-      </div>
-    </div>
+      </Slider>
+    </>
   );
 };
 
-export default FeaturedProducts;
+export default FeaturedCardsSlider;
