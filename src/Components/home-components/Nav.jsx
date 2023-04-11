@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 // import AuthBtn from './ui/AuthBtn';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import {
   AiOutlineShoppingCart,
   AiOutlineUserAdd,
@@ -8,17 +8,16 @@ import {
   AiOutlineHome,
 } from 'react-icons/ai';
 import { BiCategoryAlt } from 'react-icons/bi';
-import 'animate.css';
 
 const Nav = () => {
-  const [isSticky, setSticky] = useState(false);
+  const ref = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 150) {
-        setSticky(true);
+        ref.current.classList.add('sticky');
       } else {
-        setSticky(false);
+        ref.current.classList.remove('sticky');
       }
     };
 
@@ -30,9 +29,8 @@ const Nav = () => {
   }, []);
   return (
     <nav
-      className={`navbar navbar-expand-lg bg-body-tertiary shadow-sm   ${
-        isSticky ? 'fixed-top animate__animated animate__slideInDown' : ' '
-      }`}
+      className="navbar navbar-expand-lg bg-body-tertiary shadow-sm sticky"
+      ref={ref}
     >
       <div className="container">
         <Link className="navbar-brand" to="/">
@@ -68,22 +66,22 @@ const Nav = () => {
               </Link>
               <ul className="dropdown-menu">
                 <li>
-                  <Link className="dropdown-item" to="/category/:catslug">
+                  <NavLink className="dropdown-item" to="/category/electronic">
                     Electronics
-                  </Link>
+                  </NavLink>
                 </li>
                 <hr className="dropdown-divider" />
                 <li>
-                  <Link className="dropdown-item" to="/">
-                    Fashion
-                  </Link>
+                  <NavLink className="dropdown-item" to="/category/clothing">
+                    Clothing
+                  </NavLink>
                 </li>
                 <li>
                   <hr className="dropdown-divider" />
                 </li>
                 <li>
-                  <Link className="dropdown-item" to="/">
-                    Furniture
+                  <Link className="dropdown-item" to="/category/clothing/mens">
+                    Men's Clothing
                   </Link>
                 </li>
               </ul>
@@ -96,6 +94,7 @@ const Nav = () => {
                 type="search"
                 placeholder="Search"
                 aria-label="Search"
+                name="q"
               />
             </form>
 

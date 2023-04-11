@@ -7,7 +7,7 @@ import SignUp from './Components/home-components/ClassComp';
 import ErrorPage from './Pages/ErrorPage';
 import CategoryList from './Pages/CategoryList';
 
-function Router() {
+function Routing() {
   return (
     <div className="App">
       <Nav />
@@ -15,7 +15,8 @@ function Router() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/category/:catslug" element={<CategoryList />} />
+        <Route path="/category/:catSlug" element={<CategoryList />} />
+        <Route path="/category/:catSlug/:childCat" element={<CategoryList />} />
 
         {/* 404 routes */}
         <Route path="*" element={<ErrorPage />} />
@@ -24,4 +25,4 @@ function Router() {
   );
 }
 
-export default Router;
+export default Routing;

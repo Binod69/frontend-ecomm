@@ -1,9 +1,27 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 
 const CategoryList = () => {
   let params = useParams();
-  return <>Category {CategoryList.params}</>;
+
+  let [query, setQuery] = useSearchParams();
+
+  // useEffect(() => {
+  //   setQuery({
+  //     q: 'test',
+  //   });
+  // });
+
+  return (
+    <>
+      <p>
+        Category slug: {params.catSlug}
+        Child slug: {params.childCat}
+      </p>
+
+      <p>searchQuery: {query.get('q')}</p>
+    </>
+  );
 };
 
 export default CategoryList;

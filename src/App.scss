@@ -30,3 +30,24 @@ body {
 .fixed-top {
   transition: all 0.9s ease-in-out !important;
 }
+
+.sticky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  animation-name: slide-down;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-in-out;
+  z-index: 100;
+}
+
+@keyframes slide-down {
+  from {
+    transform: translateY(-100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}

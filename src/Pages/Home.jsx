@@ -8,7 +8,7 @@ const Home = () => {
     <>
       <Banner />
       <Saving />
-      <FeaturedProducts title={'Featured Products'} />
+      <FeaturedProducts title={'Featured Products'} className={'py-3'} />
     </>
   );
 };
