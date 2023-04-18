@@ -2,8 +2,7 @@ import React from 'react';
 
 import '../style/feature.scss';
 
-import FeaturedCards from './featuredcards/FeaturedCards';
-import { Heading } from '../typography/Heading';
+import { FeaturedCards, Heading } from '../index';
 
 const FeaturedProducts = ({ title, className }) => {
   return (

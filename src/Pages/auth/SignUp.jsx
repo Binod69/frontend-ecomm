@@ -1,10 +1,10 @@
 import React from 'react';
-import ClassComp from '../Components/ClassComp';
+import { RegisterComp } from '../../Components/index';
 
 const SignUp = () => {
   return (
     <>
-      <ClassComp />
+      <RegisterComp />
     </>
   );
 };

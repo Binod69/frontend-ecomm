@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
 
 const FeaturedCardsSlider = ({ config = {}, data = [] }) => {
@@ -45,12 +46,13 @@ const FeaturedCardsSlider = ({ config = {}, data = [] }) => {
           data.map((item, index) => (
             <div key={index} className="col">
               <div className="cardss">
-                <div>
+                <Link to={'/'}>
                   <img className="card-img" src={item.image} alt={item.title} />
-                </div>
+                </Link>
                 <div className="card-info">
                   <p className="text-title">{item.title} </p>
-                  <p className="text-body">{item.description}</p>
+                  <p className="text-body cutoff-text">{item.description}</p>
+                  <input className="expand-btn" type="checkbox" />
                 </div>
                 <div className="card-footer">
                   <span className="text-title">रु : {item.price}</span>

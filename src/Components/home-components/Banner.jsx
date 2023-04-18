@@ -1,8 +1,7 @@
 import React from 'react';
 
 // card banner import
-import HomeBanner from './banner/HomeBanner';
-import CardBanner from './banner/CardBanner';
+import { HomeBanner, CardBanner } from '../index';
 
 const Banner = () => {
   return (

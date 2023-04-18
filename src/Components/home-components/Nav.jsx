@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 // import AuthBtn from './ui/AuthBtn';
 import { Link, NavLink } from 'react-router-dom';
 import {
@@ -8,33 +8,31 @@ import {
   AiOutlineHome,
 } from 'react-icons/ai';
 import { BiCategoryAlt } from 'react-icons/bi';
+import logo from '../../assets/image/logo.png';
 
 const Nav = () => {
-  const ref = useRef(null);
+  // const ref = useRef(null);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 150) {
-        ref.current.classList.add('sticky');
-      } else {
-        ref.current.classList.remove('sticky');
-      }
-    };
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     if (window.scrollY > 100) {
+  //       ref.current.classList.add('sticky');
+  //     } else {
+  //       ref.current.classList.remove('sticky');
+  //     }
+  //   };
 
-    window.addEventListener('scroll', handleScroll);
+  //   window.addEventListener('scroll', handleScroll);
 
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener('scroll', handleScroll);
+  //   };
+  // }, []);
   return (
-    <nav
-      className="navbar navbar-expand-lg bg-body-tertiary shadow-sm sticky"
-      ref={ref}
-    >
+    <nav className="navbar navbar-expand-lg bg-body-tertiary shadow-sm sticky">
       <div className="container">
         <Link className="navbar-brand" to="/">
-          Ecommerce
+          <img className="img img-fluid w-25" src={logo} alt={logo} />
         </Link>
         <button
           className="navbar-toggler"

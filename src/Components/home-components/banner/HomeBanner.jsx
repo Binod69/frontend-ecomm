@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import SliderComponent from '../slider/SliderComponents';
+import { SliderComponent } from '../../index';
 
 //image import
 import banner1 from '../../../assets/image/banner1.jpg';

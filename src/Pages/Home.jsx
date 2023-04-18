@@ -1,7 +1,5 @@
 import React from 'react';
-import Banner from '../Components/home-components/Banner';
-import Saving from '../Components/home-components/Saving';
-import FeaturedProducts from '../Components/home-components/FeaturedProducts';
+import { Banner, Saving, FeaturedProducts } from '../Components/index';
 
 const Home = () => {
   return (

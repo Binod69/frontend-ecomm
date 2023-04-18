@@ -1,25 +1,54 @@
 import { Routes, Route } from 'react-router-dom';
 import './App.scss';
-import Nav from './Components/home-components/Nav';
-import Home from './Pages/Home';
-import Login from './Pages/Login';
-import SignUp from './Components/home-components/ClassComp';
-import ErrorPage from './Pages/ErrorPage';
-import CategoryList from './Pages/CategoryList';
+import {
+  Home,
+  Login,
+  SignUp,
+  Error,
+  CategoryList,
+  AdminLayout,
+  HomePageLayout,
+} from './Pages/index';
+import AuthLayoutPage from './Pages/home/auth.layout';
+import AdminDashboard from './Pages/admin/dashboard/Admin.Dashboard';
+import PrivateRoutes from './routes/Private.Routes';
+import { ToastContainer } from 'react-bootstrap';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Routing() {
   return (
     <div className="App">
-      <Nav />
+      <ToastContainer />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/category/:catSlug" element={<CategoryList />} />
-        <Route path="/category/:catSlug/:childCat" element={<CategoryList />} />
+        <Route path="/" element={<HomePageLayout />}>
+          <Route index element={<Home />} />
 
-        {/* 404 routes */}
-        <Route path="*" element={<ErrorPage />} />
+          <Route path="category/:catSlug" element={<CategoryList />} />
+          <Route
+            path="category/:catSlug/:childCat"
+            element={<CategoryList />}
+          />
+          {/* 404 routes */}
+          <Route path="*" element={<Error />} />
+        </Route>
+
+        {/* AUTH LAYOUT */}
+        <Route path="/" element={<AuthLayoutPage />}>
+          <Route path="login" element={<Login />} />
+          <Route path="signup" element={<SignUp />} />
+        </Route>
+
+        {/* PRIVATE ROUTE/ADMIN */}
+        <Route
+          path="/admin"
+          element={
+            <PrivateRoutes toCheck="admin">
+              <AdminLayout />
+            </PrivateRoutes>
+          }
+        >
+          <Route index element={<AdminDashboard />} />
+        </Route>
       </Routes>
     </div>
   );

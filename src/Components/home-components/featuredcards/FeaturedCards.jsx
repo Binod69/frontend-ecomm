@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import FeaturedCardsSlider from '../slider/FeaturedCards.slider';
+import { FeaturedCardsSlider } from '../../index';
 
 //image import
 import feature1 from '../../../assets/image/feature1.jpg';
@@ -28,6 +28,7 @@ const FeaturedCards = () => {
           rate: 3.9,
           count: 120,
         },
+        link: '',
       },
 
       {
@@ -42,6 +43,7 @@ const FeaturedCards = () => {
           rate: 3.9,
           count: 120,
         },
+        link: '',
       },
 
       {
@@ -56,6 +58,7 @@ const FeaturedCards = () => {
           rate: 3.9,
           count: 120,
         },
+        link: '',
       },
 
       {
@@ -70,6 +73,7 @@ const FeaturedCards = () => {
           rate: 4.0,
           count: 20,
         },
+        link: '',
       },
 
       {
@@ -84,6 +88,7 @@ const FeaturedCards = () => {
           rate: 3.9,
           count: 120,
         },
+        link: '',
       },
 
       {
@@ -98,6 +103,7 @@ const FeaturedCards = () => {
           rate: 3.9,
           count: 120,
         },
+        link: '',
       },
 
       {
@@ -112,6 +118,7 @@ const FeaturedCards = () => {
           rate: 3.9,
           count: 120,
         },
+        link: '',
       },
 
       {
@@ -126,6 +133,7 @@ const FeaturedCards = () => {
           rate: 3.9,
           count: 120,
         },
+        link: '',
       },
     ];
     setCards(ApiResponse);

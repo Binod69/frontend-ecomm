@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const Heading = ({ level, title, className }) => {
+const Heading = ({ level, title, className }) => {
   switch (level) {
     case 1:
       return <h1 className={className}>{title}</h1>;
@@ -24,3 +24,5 @@ export const Heading = ({ level, title, className }) => {
       return { title };
   }
 };
+
+export default Heading;
