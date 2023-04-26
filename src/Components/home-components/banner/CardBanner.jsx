@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
-import bannercard1 from '../../../assets/image/bannercard1.jpg';
+import bannercard1 from '../../../assets/image/macbook.avif';
 import bannercard2 from '../../../assets/image/bannercard2.jpg';
-import bannercard3 from '../../../assets/image/bannercard3.jpg';
-import bannercard4 from '../../../assets/image/bannercard4.jpg';
+import bannercard3 from '../../../assets/image/bannercard5.avif';
+import bannercard4 from '../../../assets/image/womenfashion.avif';
 import { CardComponents } from '../../index';
 
 const CardBanner = () => {

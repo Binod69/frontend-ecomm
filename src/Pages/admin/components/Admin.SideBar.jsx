@@ -8,7 +8,7 @@ const AdminSideBar = () => {
         <div className="sb-sidenav-menu">
           <div className="nav">
             <div className="sb-sidenav-menu-heading">Core</div>
-            <a className="nav-link" href="index.html">
+            <a className="nav-link" href="/">
               <div className="sb-nav-link-icon">
                 <i className="fas fa-tachometer-alt" />
               </div>
@@ -17,7 +17,7 @@ const AdminSideBar = () => {
             <div className="sb-sidenav-menu-heading">Interface</div>
             <a
               className="nav-link collapsed"
-              href="#"
+              href="/"
               data-bs-toggle="collapse"
               data-bs-target="#collapseLayouts"
               aria-expanded="false"
@@ -48,7 +48,7 @@ const AdminSideBar = () => {
             </div>
             <a
               className="nav-link collapsed"
-              href="#"
+              href="/"
               data-bs-toggle="collapse"
               data-bs-target="#collapsePages"
               aria-expanded="false"
@@ -74,7 +74,7 @@ const AdminSideBar = () => {
               >
                 <a
                   className="nav-link collapsed"
-                  href="#"
+                  href="/"
                   data-bs-toggle="collapse"
                   data-bs-target="#pagesCollapseAuth"
                   aria-expanded="false"
@@ -105,7 +105,7 @@ const AdminSideBar = () => {
                 </div>
                 <a
                   className="nav-link collapsed"
-                  href="#"
+                  href="/"
                   data-bs-toggle="collapse"
                   data-bs-target="#pagesCollapseError"
                   aria-expanded="false"

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-
+import { useNavigate } from 'react-router-dom';
+import AppConstant from '../../config/constants';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -15,8 +16,11 @@ import { FaRegPaperPlane } from 'react-icons/fa';
 
 import registerimg from '../../assets/image/register2-removebg-preview.png';
 import '../style/logincomp.scss';
+import authSvc from '../../services/auth.services';
 
 const RegisterComp = () => {
+  const navigate = useNavigate();
+
   let rules = Yup.object({
     name: Yup.string().min(3).required('name is a required field'),
     email: Yup.string().email().required(),
@@ -26,7 +30,8 @@ const RegisterComp = () => {
       temp: Yup.object({
         state: Yup.string()
           .matches(
-            '/(koshi|bagmati|madhesh | gandaki|lumbini|karnali|far-western)/'
+            /(koshi|bagmati|madhesh | gandaki|lumbini|karnali|far-western)/,
+            'State name doesnot match'
           )
           .default(null),
         district: Yup.string().default(null),
@@ -36,15 +41,18 @@ const RegisterComp = () => {
       perm: Yup.object({
         state: Yup.string()
           .matches(
-            '/(koshi|bagmati|madhesh | gandaki|lumbini|karnali|far-western)/'
+            /(koshi|bagmati|madhesh | gandaki|lumbini|karnali|far-western)/,
+            'State name doesnot match'
           )
           .default(null),
         district: Yup.string().default(null),
         municipalityName: Yup.string().default(null),
         wardNo: Yup.number().default(null),
       }),
-      role: Yup.string().matches('/(seller | customer)/').default('customer'),
-      image: Yup.object().default(null), //if array of object Yup.object().of(Yup.object())
+      role: Yup.string()
+        .matches(/(seller | customer)/, 'Role doesnot match')
+        .default('customer'),
+      image: Yup.string().default(null), //if array of object Yup.object().of(Yup.object())
     }),
   });
 
@@ -75,10 +83,39 @@ const RegisterComp = () => {
   const formik = useFormik({
     initialValues: inputDefaultValues,
     validationSchema: rules,
-    onSubmit: (values) => {},
+    onSubmit: async (values) => {
+      try {
+        let formData = new FormData();
+        //except object and files
+        //binding formData
+        //multipart/form-data send
+        Object.keys(values).forEach((field, index) => {
+          if (field === 'image') {
+            formData.append('image', values[field], values[field].name);
+          } else if (field === 'address') {
+            formData.append('address', JSON.stringify(values.address));
+          } else {
+            formData.append(field, values[field]);
+          }
+        });
+        let response = await authSvc.register(formData);
+        console.log(response);
+      } catch (err) {
+        console.log('registerlog:', err);
+        throw err;
+      }
+    },
   });
   console.log(formik.values);
   console.log(formik.errors);
+
+  useEffect(() => {
+    let token = localStorage.getItem(AppConstant.AUTH_KEY);
+    let user = JSON.parse(localStorage.getItem(AppConstant.AUTH_USER_KEY));
+    if (token && user) {
+      navigate('/' + user.role);
+    }
+  }, [navigate]);
   return (
     <>
       <Container className="my-5">
@@ -198,9 +235,10 @@ const RegisterComp = () => {
                               Far-Western State
                             </option>
                           </Form.Select>
-                          {formik.errors?.state && formik.touched?.state ? (
+                          {formik.errors.address?.temp?.state &&
+                          formik.touched.address?.temp?.state ? (
                             <span className="text-danger ">
-                              {formik.errors?.state}
+                              {formik.errors.address?.temp?.state}
                             </span>
                           ) : null}
                         </Form.Group>
@@ -210,10 +248,32 @@ const RegisterComp = () => {
                             defaultValue="District..."
                             name="address.temp.district"
                             size="sm"
+                            onChange={(e) => {
+                              let { value } = e.target;
+                              formik.setValues({
+                                ...formik.values,
+                                address: {
+                                  ...formik.values.address,
+                                  temp: {
+                                    ...formik.values.address.temp,
+                                    district: value,
+                                  },
+                                },
+                              });
+                            }}
                           >
                             <option>District...</option>
                             <option>...</option>
+                            <option>jhapa</option>
+                            <option>bagmati</option>
+                            <option>kathmandu</option>
                           </Form.Select>
+                          {formik.errors.address?.temp?.district &&
+                          formik.touched.address?.temp?.district ? (
+                            <span className="text-danger ">
+                              {formik.errors.address?.temp?.district}
+                            </span>
+                          ) : null}
                         </Form.Group>
 
                         <Form.Group as={Col} controlId="formGridZip">
@@ -222,9 +282,27 @@ const RegisterComp = () => {
                             size="sm"
                             required
                             placeholder="Enter Municipality / Rural Development name"
+                            onChange={(e) => {
+                              let { value } = e.target;
+                              formik.setValues({
+                                ...formik.values,
+                                address: {
+                                  ...formik.values.address,
+                                  temp: {
+                                    ...formik.values.address.temp,
+                                    municipalityName: value,
+                                  },
+                                },
+                              });
+                            }}
                           />
 
-                          <span className="text-danger"></span>
+                          {formik.errors.address?.temp?.municipalityName &&
+                          formik.touched.address?.temp?.municipalityName ? (
+                            <span className="text-danger ">
+                              {formik.errors.address?.temp?.municipalityName}
+                            </span>
+                          ) : null}
                         </Form.Group>
 
                         <Form.Group as={Col} controlId="formGridZip">
@@ -233,9 +311,27 @@ const RegisterComp = () => {
                             size="sm"
                             required
                             placeholder="Enter Ward Name"
+                            onChange={(e) => {
+                              let { value } = e.target;
+                              formik.setValues({
+                                ...formik.values,
+                                address: {
+                                  ...formik.values.address,
+                                  temp: {
+                                    ...formik.values.address.temp,
+                                    wardNo: value,
+                                  },
+                                },
+                              });
+                            }}
                           />
 
-                          <span className="text-danger"></span>
+                          {formik.errors.address?.temp?.wardNo &&
+                          formik.touched.address?.temp?.wardNo ? (
+                            <span className="text-danger ">
+                              {formik.errors.address?.temp?.wardNo}
+                            </span>
+                          ) : null}
                         </Form.Group>
                       </Row>
                     </Col>
@@ -290,9 +386,10 @@ const RegisterComp = () => {
                               Far-Western Pradesh
                             </option>
                           </Form.Select>
-                          {formik.errors?.state && formik.touched?.state ? (
+                          {formik.errors.address?.perm?.state &&
+                          formik.touched.address?.perm?.state ? (
                             <span className="text-danger ">
-                              {formik.errors?.state}
+                              {formik.errors.address?.perm?.state}
                             </span>
                           ) : null}
                         </Form.Group>
@@ -302,10 +399,32 @@ const RegisterComp = () => {
                             defaultValue="District..."
                             name="address.perm.district"
                             size="sm"
+                            onChange={(e) => {
+                              let { value } = e.target;
+
+                              formik.setValues({
+                                ...formik.values,
+                                address: {
+                                  ...formik.values.address,
+                                  perm: {
+                                    ...formik.values.address.perm,
+                                    district: value,
+                                  },
+                                },
+                              });
+                            }}
                           >
                             <option>District...</option>
-                            <option>...</option>
+                            <option>jhapa</option>
+                            <option>bagmati</option>
+                            <option>kathmandu</option>
                           </Form.Select>
+                          {formik.errors.address?.perm?.district &&
+                          formik.touched.address?.perm?.district ? (
+                            <span className="text-danger ">
+                              {formik.errors.address?.perm?.district}
+                            </span>
+                          ) : null}
                         </Form.Group>
 
                         <Form.Group as={Col} controlId="formGridZip">
@@ -314,9 +433,28 @@ const RegisterComp = () => {
                             size="sm"
                             required
                             placeholder="Enter Municipality / Rural Development name"
+                            onChange={(e) => {
+                              let { value } = e.target;
+
+                              formik.setValues({
+                                ...formik.values,
+                                address: {
+                                  ...formik.values.address,
+                                  perm: {
+                                    ...formik.values.address.perm,
+                                    municipalityName: value,
+                                  },
+                                },
+                              });
+                            }}
                           />
 
-                          <span className="text-danger"></span>
+                          {formik.errors.address?.perm?.municipalityName &&
+                          formik.touched.address?.perm?.municipalityName ? (
+                            <span className="text-danger ">
+                              {formik.errors.address?.perm?.municipalityName}
+                            </span>
+                          ) : null}
                         </Form.Group>
 
                         <Form.Group as={Col} controlId="formGridZip">
@@ -325,9 +463,28 @@ const RegisterComp = () => {
                             size="sm"
                             required
                             placeholder="Enter Ward Name"
+                            onChange={(e) => {
+                              let { value } = e.target;
+
+                              formik.setValues({
+                                ...formik.values,
+                                address: {
+                                  ...formik.values.address,
+                                  perm: {
+                                    ...formik.values.address.perm,
+                                    wardNo: value,
+                                  },
+                                },
+                              });
+                            }}
                           />
 
-                          <span className="text-danger"></span>
+                          {formik.errors.address?.perm?.wardNo &&
+                          formik.touched.address?.perm?.wardNo ? (
+                            <span className="text-danger ">
+                              {formik.errors.address?.perm?.wardNo}
+                            </span>
+                          ) : null}
                         </Form.Group>
                       </Row>
                     </Col>
@@ -361,12 +518,14 @@ const RegisterComp = () => {
                         name="role"
                         required
                         defaultValue="Choose..."
-                        onChange={(e) => {
-                          formik.setValues({
-                            ...formik.values,
-                            role: e.target.role,
-                          });
-                        }}
+                        // onChange={(e) => {
+                        //   let { value } = e.target;
+                        //   formik.setValues({
+                        //     ...formik.values,
+                        //     role: value,
+                        //   });
+                        // }}
+                        onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                       >
                         <option>Choose...</option>
@@ -418,11 +577,6 @@ const RegisterComp = () => {
                         <FaRegPaperPlane /> Register
                       </Button>
                     </Col>
-                    {/* <Col sm={{ offset: 3, span: 9 }}>
-                      <Button className="btn-danger">
-                        <FaRegPaperPlane /> Register
-                      </Button>
-                    </Col> */}
                   </Form.Group>
                 </Card.Body>
               </Form>

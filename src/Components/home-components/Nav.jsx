@@ -5,7 +5,7 @@ import {
   AiOutlineShoppingCart,
   AiOutlineUserAdd,
   AiOutlineUser,
-  AiOutlineHome,
+  // AiOutlineHome,
 } from 'react-icons/ai';
 import { BiCategoryAlt } from 'react-icons/bi';
 import logo from '../../assets/image/logo.png';
@@ -47,11 +47,22 @@ const Nav = () => {
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <Link className="nav-link active" aria-current="page" to="/">
                 <AiOutlineHome className="mb-1" /> Home
               </Link>
-            </li>
+            </li> */}
+            <form className="d-flex order-1 order-lg-1 " role="search">
+              <input
+                className="form-control me-2"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+                name="q"
+              />
+            </form>
+          </ul>
+          <ul className="navbar-nav">
             <li className="nav-item dropdown">
               <Link
                 className="nav-link dropdown-toggle"
@@ -84,17 +95,6 @@ const Nav = () => {
                 </li>
               </ul>
             </li>
-          </ul>
-          <ul className="navbar-nav">
-            <form className="d-flex order-1 order-lg-1 " role="search">
-              <input
-                className="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-                name="q"
-              />
-            </form>
 
             <li className="nav-item order-lg-2">
               <Link className="nav-link" to="/">

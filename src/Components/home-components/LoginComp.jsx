@@ -1,18 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import '../style/logincomp.scss';
-import axios from 'axios';
 import { toast } from 'react-toastify';
 import { Card, Col, Container, Row, Form, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { BiReset, BiPaperPlane, BiArrowBack } from 'react-icons/bi';
 import { BsFacebook, BsGoogle, BsTwitter } from 'react-icons/bs';
 import loginimg from '../../assets/image/login-img.svg';
 
 import { Heading } from '../index';
+import authSvc from '../../services/auth.services';
+import { ToastContainer } from 'react-bootstrap';
+import AppConstant from '../../config/constants';
+import { Circles } from 'react-loader-spinner';
 
 const LoginComp = () => {
+  let navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
   let rules = Yup.object({
     email: Yup.string().email().required(),
     password: Yup.string().min(8).required(),
@@ -26,33 +32,35 @@ const LoginComp = () => {
     validationSchema: rules,
     onSubmit: async (values) => {
       try {
-        let response = await axios.post(
-          'http://localhost:3005/api/v1/auth/login',
-          values,
-          {
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        );
-        toast.success(response.data.msg);
+        setLoading(true);
+        let response = await authSvc.login(values);
+        toast.success(response.msg);
+        navigate('/' + response.userDetail.role);
       } catch (err) {
-        toast.error(err.response.data.msg);
+        toast.error(err.data.msg);
+      } finally {
+        setLoading(false);
       }
     },
   });
 
-  console.log(formik.values);
-  console.log(formik.errors);
+  useEffect(() => {
+    let token = localStorage.getItem(AppConstant.AUTH_KEY);
+    let user = JSON.parse(localStorage.getItem(AppConstant.AUTH_USER_KEY));
+    if (token && user) {
+      navigate('/' + user.role);
+    }
+  }, [navigate]);
 
   return (
     <>
+      <ToastContainer />
       <div className="background">
         <Container>
-          {/* <Link to={'/'}>
+          <Link to={'/'}>
             <BiArrowBack />
             Go back
-          </Link> */}
+          </Link>
           <Row className="center">
             <Col lg={4}>
               <Form onSubmit={formik.handleSubmit}>
@@ -122,11 +130,28 @@ const LoginComp = () => {
                     </Button>
 
                     <Button
+                      disabled={loading}
                       type="submit"
                       variant="btn btn-success"
                       className="me-2 ms-3 my-2"
                     >
-                      <BiPaperPlane /> Login
+                      {loading ? (
+                        <>
+                          <Circles
+                            height="80"
+                            width="80"
+                            color="#fff"
+                            ariaLabel="circles-loading"
+                            wrapperStyle={{}}
+                            wrapperClass=""
+                            visible={true}
+                          />
+                        </>
+                      ) : (
+                        <>
+                          <BiPaperPlane /> Login
+                        </>
+                      )}
                     </Button>
                   </Col>
                   <hr />

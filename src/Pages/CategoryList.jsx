@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 
 const CategoryList = () => {
@@ -6,11 +6,11 @@ const CategoryList = () => {
 
   let [query, setQuery] = useSearchParams();
 
-  // useEffect(() => {
-  //   setQuery({
-  //     q: 'test',
-  //   });
-  // });
+  useEffect(() => {
+    setQuery({
+      q: 'test',
+    });
+  });
 
   return (
     <>

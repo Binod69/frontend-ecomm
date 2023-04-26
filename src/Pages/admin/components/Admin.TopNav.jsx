@@ -8,7 +8,7 @@ const AdminTopNav = () => {
   return (
     <>
       <nav className="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-        <a className="navbar-brand ps-3" href="index.html">
+        <a className="navbar-brand ps-3" href="/">
           Start Bootstrap
         </a>
         <button
@@ -42,7 +42,7 @@ const AdminTopNav = () => {
             <a
               className="nav-link dropdown-toggle"
               id="navbarDropdown"
-              href="#"
+              href="/"
               role="button"
               data-bs-toggle="dropdown"
               aria-expanded="false"
@@ -54,12 +54,12 @@ const AdminTopNav = () => {
               aria-labelledby="navbarDropdown"
             >
               <li>
-                <a className="dropdown-item" href="#!">
+                <a className="dropdown-item" href="/">
                   Settings
                 </a>
               </li>
               <li>
-                <a className="dropdown-item" href="#!">
+                <a className="dropdown-item" href="/">
                   Activity Log
                 </a>
               </li>
@@ -67,7 +67,7 @@ const AdminTopNav = () => {
                 <hr className="dropdown-divider" />
               </li>
               <li>
-                <a className="dropdown-item" href="#!">
+                <a className="dropdown-item" href="/">
                   Logout
                 </a>
               </li>

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
 const State = () => {
-  const [data, setData] = useState({
-    email: '',
-    password: '',
-  });
+  // const [data, setData] = useState({
+  //   email: '',
+  //   password: '',
+  // });
 
   const [loading, setLoading] = useState(false);
 
