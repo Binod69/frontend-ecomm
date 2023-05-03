@@ -8,7 +8,7 @@ const LoadingBtn = () => {
       <div className="dot dot-3" />
       <div className="dot dot-4" />
       <div className="dot dot-5" />
-      <span>Loading...</span>
+      {/* <span>Loading...</span> */}
     </div>
   );
 };

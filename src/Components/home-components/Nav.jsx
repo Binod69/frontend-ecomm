@@ -9,25 +9,10 @@ import {
 } from 'react-icons/ai';
 import { BiCategoryAlt } from 'react-icons/bi';
 import logo from '../../assets/image/logo.png';
+import AppConstant from '../../config/constants';
 
 const Nav = () => {
-  // const ref = useRef(null);
-
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     if (window.scrollY > 100) {
-  //       ref.current.classList.add('sticky');
-  //     } else {
-  //       ref.current.classList.remove('sticky');
-  //     }
-  //   };
-
-  //   window.addEventListener('scroll', handleScroll);
-
-  //   return () => {
-  //     window.removeEventListener('scroll', handleScroll);
-  //   };
-  // }, []);
+  let user = JSON.parse(localStorage.getItem(AppConstant.AUTH_USER_KEY));
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary shadow-sm sticky">
       <div className="container">
@@ -89,37 +74,52 @@ const Nav = () => {
                   <hr className="dropdown-divider" />
                 </li>
                 <li>
-                  <Link className="dropdown-item" to="/category/clothing/mens">
+                  <NavLink
+                    className="dropdown-item"
+                    to="/category/clothing/mens"
+                  >
                     Men's Clothing
-                  </Link>
+                  </NavLink>
                 </li>
               </ul>
             </li>
 
             <li className="nav-item order-lg-2">
-              <Link className="nav-link" to="/">
+              <NavLink className="nav-link" to="/">
                 <AiOutlineShoppingCart className="mb-1" /> Cart (0)
-              </Link>
+              </NavLink>
             </li>
-            <li className="nav-item order-lg-3">
-              <Link className="nav-link " to="/login">
-                {/* <AuthBtn
+            {user ? (
+              <>
+                <li className="nav-item order-lg-3">
+                  <NavLink className="nav-link " to={'/' + user.role}>
+                    <AiOutlineUser className="mb-1" /> {user.name}
+                  </NavLink>
+                </li>
+              </>
+            ) : (
+              <>
+                <li className="nav-item order-lg-3">
+                  <NavLink className="nav-link " to="/login">
+                    {/* <AuthBtn
                   title={'Login'}
                   icon={<AiOutlineUser className="mb-1 me-1" />}
                 /> */}
-                <AiOutlineUser className="mb-1" /> Login
-              </Link>
-            </li>
+                    <AiOutlineUser className="mb-1" /> Login
+                  </NavLink>
+                </li>
 
-            <li className="nav-item order-lg-4">
-              <Link className="nav-link " to="/signup">
-                {/* <AuthBtn
+                <li className="nav-item order-lg-4">
+                  <NavLink className="nav-link " to="/signup">
+                    {/* <AuthBtn
                   title={'Sign Up'}
                   icon={<AiOutlineUserAdd className="mb-1 me-1" />}
                 /> */}
-                <AiOutlineUserAdd className="mb-1" /> Signup
-              </Link>
-            </li>
+                    <AiOutlineUserAdd className="mb-1" /> Signup
+                  </NavLink>
+                </li>
+              </>
+            )}
           </ul>
         </div>
       </div>

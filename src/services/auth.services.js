@@ -47,6 +47,19 @@ class AuthService extends HttpService {
       throw err;
     }
   };
+
+  updatePassword = async (data) => {
+    try {
+      let response = await this.postRequest(ApiEndpoints.CHANGEPASSWORD, data, {
+        login: true,
+      });
+
+      return response;
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  };
 }
 
 const authSvc = new AuthService();

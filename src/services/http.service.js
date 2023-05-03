@@ -15,6 +15,9 @@ class HttpService {
       this.headers['Authorization'] =
         'Bearer ' + localStorage.getItem(AppConstant.AUTH_KEY);
     }
+    if (config['params']) {
+      this.headers['params'] = config['params'];
+    }
   };
   postRequest = async (url, data, config = {}) => {
     //TODO: API CALL IN POST REQUEST
@@ -23,7 +26,7 @@ class HttpService {
       let response = await axiosInstance.post(url, data, {
         headers: this.headers,
       });
-      console.log('api response', response);
+      // console.log('api response', response);
       return response.data;
     } catch (err) {
       console.log('httppost:', err);
@@ -38,7 +41,7 @@ class HttpService {
       let response = await axiosInstance.patch(url, data, {
         headers: this.headers,
       });
-      console.log('api response', response);
+      // console.log('api response', response);
       return response.data;
     } catch (err) {
       console.log('httppost:', err);

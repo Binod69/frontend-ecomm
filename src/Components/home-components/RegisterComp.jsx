@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
@@ -18,8 +18,13 @@ import registerimg from '../../assets/image/register2-removebg-preview.png';
 import '../style/logincomp.scss';
 import authSvc from '../../services/auth.services';
 
+import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
+
 const RegisterComp = () => {
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState();
+
+  const toggleShowPassword = () => setShowPassword(!showPassword);
 
   let rules = Yup.object({
     name: Yup.string().min(3).required('name is a required field'),
@@ -30,7 +35,7 @@ const RegisterComp = () => {
       temp: Yup.object({
         state: Yup.string()
           .matches(
-            /(koshi|bagmati|madhesh | gandaki|lumbini|karnali|far-western)/,
+            /(koshi|bagmati|madhesh|gandaki|lumbini|karnali|far-western)/,
             'State name doesnot match'
           )
           .default(null),
@@ -41,7 +46,7 @@ const RegisterComp = () => {
       perm: Yup.object({
         state: Yup.string()
           .matches(
-            /(koshi|bagmati|madhesh | gandaki|lumbini|karnali|far-western)/,
+            /(koshi|bagmati|madhesh|gandaki|lumbini|karnali|far-western)/,
             'State name doesnot match'
           )
           .default(null),
@@ -49,11 +54,12 @@ const RegisterComp = () => {
         municipalityName: Yup.string().default(null),
         wardNo: Yup.number().default(null),
       }),
-      role: Yup.string()
-        .matches(/(seller | customer)/, 'Role doesnot match')
-        .default('customer'),
-      image: Yup.string().default(null), //if array of object Yup.object().of(Yup.object())
     }),
+    role: Yup.string()
+      .matches(/(seller|customer)/, 'Role doesnot match')
+      .default('customer'),
+    image: Yup.string().default(null), //if array of object Yup.object().of(Yup.object())
+    status: Yup.string().default('active'),
   });
 
   let inputDefaultValues = {
@@ -74,10 +80,10 @@ const RegisterComp = () => {
         municipalityName: '',
         wardNo: '',
       },
-      role: '',
-      image: '',
-      status: 'inactive',
     },
+    role: '',
+    image: '',
+    status: 'active',
   };
 
   const formik = useFormik({
@@ -167,11 +173,11 @@ const RegisterComp = () => {
                     </Col>
                   </Form.Group>
 
-                  <Form.Group as={Row} className="mb-3">
+                  <Form.Group as={Row} className="mb-3 pos-rel">
                     <Form.Label className="col-sm-3">Password :</Form.Label>
                     <Col sm={9}>
                       <Form.Control
-                        type="password"
+                        type={showPassword ? 'text' : 'password'}
                         name="password"
                         required
                         onChange={formik.handleChange}
@@ -179,6 +185,19 @@ const RegisterComp = () => {
                         size="sm"
                         placeholder="Enter password"
                       />
+
+                      <span className="pos-abs" onClick={toggleShowPassword}>
+                        {showPassword ? (
+                          <>
+                            <AiOutlineEyeInvisible />
+                          </>
+                        ) : (
+                          <>
+                            <AiOutlineEye />
+                          </>
+                        )}
+                      </span>
+
                       {formik.errors.password && formik.touched.password ? (
                         <span className="text-danger pl-3">
                           {formik.errors.password}
@@ -518,14 +537,13 @@ const RegisterComp = () => {
                         name="role"
                         required
                         defaultValue="Choose..."
-                        // onChange={(e) => {
-                        //   let { value } = e.target;
-                        //   formik.setValues({
-                        //     ...formik.values,
-                        //     role: value,
-                        //   });
-                        // }}
-                        onChange={formik.handleChange}
+                        onChange={(e) => {
+                          let { value } = e.target;
+                          formik.setValues({
+                            ...formik.values,
+                            role: value,
+                          });
+                        }}
                         onBlur={formik.handleBlur}
                       >
                         <option>Choose...</option>
@@ -563,6 +581,7 @@ const RegisterComp = () => {
                       ) : null}
                     </Col>
                   </Form.Group>
+
                   <Form.Group as={Row} className="mb-3">
                     <Col sm={{ offset: 3, span: 9 }}>
                       <Button

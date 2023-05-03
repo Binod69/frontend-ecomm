@@ -14,10 +14,14 @@ import authSvc from '../../services/auth.services';
 import { ToastContainer } from 'react-bootstrap';
 import AppConstant from '../../config/constants';
 import { Circles } from 'react-loader-spinner';
+import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
 
 const LoginComp = () => {
   let navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const toggleShowPassword = () => setShowPassword(!showPassword);
 
   let rules = Yup.object({
     email: Yup.string().email().required(),
@@ -98,14 +102,30 @@ const LoginComp = () => {
                         controlId="formBasicPassword"
                       >
                         <Form.Label>Password</Form.Label>
-                        <Form.Control
-                          type="password"
-                          name="password"
-                          required
-                          placeholder="Enter Password"
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                        />
+                        <div className="pos">
+                          <Form.Control
+                            type={showPassword ? 'text' : 'password'}
+                            name="password"
+                            required
+                            placeholder="Enter Password"
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                          />
+                          <span
+                            className="pointer"
+                            onClick={toggleShowPassword}
+                          >
+                            {showPassword ? (
+                              <>
+                                <AiOutlineEyeInvisible />
+                              </>
+                            ) : (
+                              <>
+                                <AiOutlineEye />
+                              </>
+                            )}
+                          </span>
+                        </div>
                         {formik.errors.password && formik.touched.password ? (
                           <span className="text-danger pl-3">
                             {formik.errors.password}

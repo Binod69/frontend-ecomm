@@ -9,10 +9,10 @@ body {
   font-family: 'Poppins', sans-serif;
 }
 
-a {
-  text-decoration: none !important;
-  color: inherit !important;
-}
+// a {
+//   text-decoration: none !important;
+//   color: inherit !important;
+// }
 
 @include lg {
   .banner-rel {
@@ -167,3 +167,59 @@ a {
     opacity: 0.5;
   }
 }
+
+//cursor pointer for login show and hide password
+.pos {
+  position: relative;
+  .pointer {
+    cursor: pointer;
+    position: absolute;
+    top: 10%;
+    left: 90%;
+  }
+  @include lg {
+    position: relative;
+
+    .pointer {
+      cursor: pointer;
+      position: absolute;
+      top: 16%;
+      left: 90%;
+    }
+  }
+}
+
+//cursor pointer for register password show and hide password
+.pos-rel {
+  position: relative;
+  .pos-abs {
+    position: absolute;
+    top: 10%;
+    left: 92%;
+    cursor: pointer;
+  }
+}
+
+//cursor pointer for admin change password show and hide password
+// .adminpos {
+//   position: relative;
+
+//   .adminpointer1 {
+//     cursor: pointer;
+//     position: absolute;
+//     top: 13%;
+//     left: 93%;
+//   }
+//   .adminpointer2 {P
+//     cursor: pointer;
+//     position: absolute;
+//     top: 47%;
+//     left: 93%;
+//   }
+//   .adminpointer3 {
+//     cursor: pointer;
+//     position: absolute;
+//     top: 82%;
+//     left: 93%;
+//   }
+// }

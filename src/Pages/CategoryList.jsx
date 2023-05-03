@@ -7,10 +7,12 @@ const CategoryList = () => {
   let [query, setQuery] = useSearchParams();
 
   useEffect(() => {
-    setQuery({
-      q: 'test',
-    });
-  });
+    setTimeout(() => {
+      setQuery({
+        q: 'test',
+      });
+    }, 3000);
+  }, [setQuery]);
 
   return (
     <>

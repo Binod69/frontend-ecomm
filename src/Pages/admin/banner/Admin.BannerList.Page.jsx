@@ -1,72 +1,72 @@
-import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import { FaAngleRight, FaUsers } from 'react-icons/fa';
+import React from 'react';
+// import { NavLink } from 'react-bootstrap';
+// import { FaAngleRight, FaUsers } from 'react-icons/fa';
 import AdminBreadCrumbs from '../components/Admin.BreadCrumbs';
-import Tablecomponents from '../../../Components/table/Table.components';
+import DataTable from 'react-data-table-component';
 import { BsArrowDownShort } from 'react-icons/bs';
-import { useEffect } from 'react';
-import bannerSvc from '../../../services/banner.services';
-import { toast } from 'react-toastify';
 
-const sortIcon = <BsArrowDownShort />;
+const sortIcons = <BsArrowDownShort className="me-2" />;
 
-const AdminDashboard = () => {
+const AdminBannerListPage = () => {
   const columns = [
     {
-      name: 'Title',
+      name: 'User Id',
       selector: (row) => row.title,
       sortable: true,
     },
     {
-      name: 'Link',
-      selector: (row) => row.link,
-      sortable: true,
-    },
-    {
-      name: 'Image',
-      selector: (row) => row.image,
+      name: 'Customer',
+      selector: (row) => row.year,
       sortable: true,
     },
     {
       name: 'Status',
-      selector: (row) => row.status,
+      selector: (row) => row.year,
+      sortable: true,
+    },
+    {
+      name: 'Amount',
+      selector: (row) => row.year,
       sortable: true,
     },
     {
       name: 'Action',
-      selector: (row) => 'Edit / Delete ',
+      selector: (row) => row.year,
+      sortable: true,
     },
   ];
 
-  const [data, setData] = useState();
-
-  const loadAllBanner = async () => {
-    try {
-      let response = await bannerSvc.listAllBanner();
-      setData(response.result);
-    } catch (err) {
-      console.log(err);
-      toast.warning(err.msg);
-    }
-  };
-
-  useEffect(() => {
-    loadAllBanner();
-  }, []);
-
+  const data = [
+    {
+      id: 1,
+      title: 'Beetlejuice',
+      year: '1988',
+    },
+    {
+      id: 2,
+      title: 'Ghostbusters',
+      year: '1984',
+    },
+  ];
   return (
     <>
       <div className="container-fluid px-4">
         <AdminBreadCrumbs
-          pageTitle={'Dashboard'}
+          showAdd={true}
+          btnLink="/admin/banner/create"
+          pageTitle={'Banner'}
           links={[
             {
-              title: 'Dashborad',
+              title: 'Dashboard',
+              link: '/admin',
+            },
+            {
+              title: 'Banner List',
               link: null,
             },
           ]}
         />
-        <div className="row">
+        {/* <div className="row">
           <div className="col-xl-3 col-md-6">
             <div className="card bg-primary text-white mb-4">
               <div className="card-body">
@@ -89,7 +89,7 @@ const AdminDashboard = () => {
             <div className="card bg-warning text-white mb-4">
               <div className="card-body">Warning Card</div>
               <div className="card-footer d-flex align-items-center justify-content-between">
-                <a className="small text-white stretched-link" href="/">
+                <a className="small text-white stretched-link" href="#">
                   View Details
                 </a>
                 <div className="small text-white">
@@ -102,7 +102,7 @@ const AdminDashboard = () => {
             <div className="card bg-success text-white mb-4">
               <div className="card-body">Success Card</div>
               <div className="card-footer d-flex align-items-center justify-content-between">
-                <a className="small text-white stretched-link" href="/">
+                <a className="small text-white stretched-link" href="#">
                   View Details
                 </a>
                 <div className="small text-white">
@@ -115,7 +115,7 @@ const AdminDashboard = () => {
             <div className="card bg-danger text-white mb-4">
               <div className="card-body">Danger Card</div>
               <div className="card-footer d-flex align-items-center justify-content-between">
-                <a className="small text-white stretched-link" href="/">
+                <a className="small text-white stretched-link" href="#">
                   View Details
                 </a>
                 <div className="small text-white">
@@ -124,16 +124,17 @@ const AdminDashboard = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div />
         <div className="card mb-4">
           <div className="card-body">
-            <Tablecomponents
+            <DataTable
               columns={columns}
               data={data}
-              pagination={[]}
-              sortIcon={sortIcon}
+              sortIcon={sortIcons}
+              pagination
+              title="Latest Order"
             />
           </div>
         </div>
@@ -142,4 +143,4 @@ const AdminDashboard = () => {
   );
 };
 
-export default AdminDashboard;
+export default AdminBannerListPage;
